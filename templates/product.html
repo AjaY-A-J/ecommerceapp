@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+       {{product.desc|truncatewords:155 }}
+{% endblock %}
+{% block title %}
+      {{product.name}}---
+{% endblock %}
+{% block content %}
+<div>
+    <div>
+        <p><a href="{% url 'ecommerceapp:allProdCat' %}">Home</a>|<a href="{{product.category.get_url}}">{{product.name}}</a></p>
+    </div>
+</div>
+<div >
+    <br>
+    <div class="col-12 com-sm-12 col-md-12 col-lg-6 text-center">
+        <div>
+            <img src="{{product.image.url}}" alt="{{product.name}}">
+        </div>
+    </div>
+    <div class="col-12 com-sm-12 col-md-12 col-lg-6">
+        <div>
+           <h1 class="my_prod_title">{{product.name}}</h1>
+           <p>${{product.price}}</p>
+           <p class="my_title">Product Description</p>
+           <p class="text-justify">{{product.desc}}</p>
+        </div>
+         {% if product.stock <= 0 %}
+           <p><b> out of stock </b></p>
+         {% else %}
+            <button><a href="{% url 'cart:add_cart' product_id %}">Add to cart</a></button>
+         {% endif %}
+    </div>
+</div>
+{% endblock %}

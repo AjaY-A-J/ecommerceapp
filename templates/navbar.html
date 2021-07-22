@@ -1,0 +1,135 @@
+{% load static %}
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+.navbar {
+  background-color:#333;
+}
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color:cyan;
+  text-align:left;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.dropdown {
+  float: left;
+ 
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: green;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin:2;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color:black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: blue;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align:center;
+}
+
+.dropdown-content a:hover {
+  background-color:#ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  text-align:center;
+}
+
+.navbar .search-container {
+  float: right;
+}
+
+.navbar input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+}
+
+.navbar .search-container button {
+  float: right;
+  padding: 8px 10px;
+  margin-top: 8px;
+  margin-right: 10px;
+  background:green;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .navbar .search-container {
+    float: none;
+  }
+  .navbar a, .navbar input[type=text], .navbar .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .navbar input[type=text] {
+    border: 1px solid #ccc;
+  }
+}
+</style>
+</head>
+<body>
+<div class="navbar">
+  <div class="dropdown">
+    <button class="dropbtn">SHOP
+      <i class="fas fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+        <a href="{% url 'ecommerceapp:allProdCat' %}">All products</a>
+           {% for cat in links %}
+              <a class="nav-item dropdown" href="{{cat.get_url}}">{{cat.name}}</a>
+           {% endfor %}
+    </div>
+  </div>
+        <a class="nav-link" href="cart:cart_details"><i class="fas fa-cart-plus">{{item_count}}</i></a>
+    <div class="search-container">
+     <form action="{% url 'searchapp:searchresult' %}" method="get">
+          {% csrf_token %}
+       <input type="text" placeholder="Search.." aria-label="search" name="q">
+       <button type="submit"> <i class="fas fa-search"></i></button>
+     </form>
+   </div>
+</div>
+</body>
+<br>
+</html>
